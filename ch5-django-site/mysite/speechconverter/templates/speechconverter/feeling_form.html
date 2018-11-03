@@ -1,0 +1,13 @@
+
+
+{% block content %}
+
+<div id='chat-box'>
+  <form action='analyze_text/' method='post'>
+    {% csrf_token %}
+    <textarea name="comment"></textarea>
+    <button type='submit'> submit </button>
+  </form>
+</div>
+
+{% endblock %}
