@@ -39,18 +39,18 @@ def three_Entities(entities):
 
 #takes in a sentiment value
 def postive(s):
-	if s >= .6:
+	if s >= .4:
 		return True
 	return False
 
 def negative(s):
-	if s <= -.6:
+	if s <= -.4:
 		return True
 
 	return False
 
 def nuetral(s):
-	if s < .6 and s > -.6:
+	if s < .4 and s > -.4:
 		return True
 	return False
 
@@ -65,17 +65,17 @@ def three_sentences(entities):
 	final_sent = []
 	for entitiy in entities:
 		if postive(entitiy["sentiment"]):
-			if entitiy["magnitude"] > max_mag(entities)//1.5:
+			if entitiy["magnitude"] > max_mag(entities)/1.5:
 				final_sent.append("love " + entitiy["name"])
 			else:
 				final_sent.append("like " + entitiy["name"])
 		elif negative(entitiy["sentiment"]):
-			if entitiy["magnitude"] > max_mag(entities)//1.5:
+			if entitiy["magnitude"] > max_mag(entities)/1.5:
 				final_sent.append("hate " + entitiy["name"])
 			else:
 				final_sent.append("dislike " + entitiy["name"])
 		else:
-			if entitiy["magnitude"] > max_mag(entities)//1.5:
+			if entitiy["magnitude"] > max_mag(entities)/1.5:
 				final_sent.append("confused " + entitiy["name"])
 			else:
 				final_sent.append("neutral " + entitiy["name"])
@@ -98,18 +98,12 @@ def return_sentiment(text):
     sentiment = client.analyze_sentiment(document=document).document_sentiment
     #response = client.analyze_entities(document=document)
 
-
     # entity types from enums.Entity.Type
     entity_type = ('UNKNOWN', 'PERSON', 'LOCATION', 'ORGANIZATION',
                        'EVENT', 'WORK_OF_ART', 'CONSUMER_GOOD', 'OTHER')
 
     return_arr = []
     for entity in result.entities:
-
-        # for mention in entity.mentions:
-        #     mag += mention.sentiment.magnitude
-
-        # print(entity.sentiment)
 
         entity_obj = {
             'name':entity.name,
