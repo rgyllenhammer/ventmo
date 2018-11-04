@@ -94,3 +94,8 @@ class RecordingFile(object):
         wavefile.setsampwidth(self._pa.get_sample_size(pyaudio.paInt16))
         wavefile.setframerate(self.rate)
         return wavefile
+
+
+rec = Recorder()
+with rec.open('test.wav', 'wb') as recfile:
+    recfile.record(duration=5.0)

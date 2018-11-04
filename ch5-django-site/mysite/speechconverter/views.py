@@ -3,12 +3,19 @@ from .forms import CommentForm
 from django.http import HttpResponseRedirect
 from django.templatetags.static import static
 import os
+from . import language
 
+module_dir = os.path.dirname(__file__)
 def index(request):
-    return render(request, 'speechconverter/home.html')
+    file_path = os.path.join(module_dir, 'textfiles/file_in.txt')
+    f = open(file_path, 'r')
+    lines = f.readlines()
+    full_text = "".join(lines)
+    f.close()
+    return render(request, 'speechconverter/home.html', {'default':full_text})
 
 def analyze(request):
-    module_dir = os.path.dirname(__file__)
+
     file_path = os.path.join(module_dir, 'textfiles/file.txt')
     if request.method == "POST":
         form = CommentForm(request.POST)
@@ -27,8 +34,11 @@ def analyze(request):
     elif request.method == "GET":
         f = open(file_path, 'r')
         lines = f.readlines()
+        full_text = "".join(lines)
         f.close()
-        return render(request, 'speechconverter/text_analysis.html', {'content':lines})
+
+        analyzed_lines = language.return_sentiment(full_text)
+        return render(request, 'speechconverter/text_analysis.html', {'original_text':full_text, 'content':analyzed_lines})
 
 
 
