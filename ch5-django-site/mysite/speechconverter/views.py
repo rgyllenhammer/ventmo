@@ -3,6 +3,7 @@ from .forms import CommentForm
 from django.http import HttpResponseRedirect
 from django.templatetags.static import static
 import os
+from . import language
 
 def index(request):
     return render(request, 'speechconverter/home.html')
@@ -27,8 +28,12 @@ def analyze(request):
     elif request.method == "GET":
         f = open(file_path, 'r')
         lines = f.readlines()
+        full_text = "".join(lines)
         f.close()
-        return render(request, 'speechconverter/text_analysis.html', {'content':lines})
+
+
+        analyzed_lines = language.return_sentiment(full_text)
+        return render(request, 'speechconverter/text_analysis.html', {'original_text':full_text, 'content':analyzed_lines})
 
 
 
