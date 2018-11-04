@@ -6,7 +6,7 @@ import six
 import os
 
 module_dir = os.path.dirname(__file__)
-file_path = os.path.join(module_dir, 'voice-test-afb02ccbc45b.json')
+file_path = os.path.join(module_dir, 'ventmo-e430325bdb43.json')
 credentials = service_account.Credentials.from_service_account_file(file_path)
 client = language.LanguageServiceClient(credentials = credentials)
 
