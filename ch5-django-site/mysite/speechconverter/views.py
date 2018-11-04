@@ -5,11 +5,17 @@ from django.templatetags.static import static
 import os
 from . import language
 
+module_dir = os.path.dirname(__file__)
 def index(request):
-    return render(request, 'speechconverter/home.html')
+    file_path = os.path.join(module_dir, 'textfiles/file_in.txt')
+    f = open(file_path, 'r')
+    lines = f.readlines()
+    full_text = "".join(lines)
+    f.close()
+    return render(request, 'speechconverter/home.html', {'default':full_text})
 
 def analyze(request):
-    module_dir = os.path.dirname(__file__)
+
     file_path = os.path.join(module_dir, 'textfiles/file.txt')
     if request.method == "POST":
         form = CommentForm(request.POST)
