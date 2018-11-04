@@ -1,3 +1,67 @@
-.main{
-  color: red;
+.background{
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  z-index: 1
+}
+.back-img{
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  z-index: 1
+}
+.back-img img{
+  object-fit: none;
+	width: 100%;
+	height: 100%;
+  margin: -10px;
+
+}
+.missing-box{
+  position: absolute;
+  text-align: center;
+  vertical-align: middle;
+  left: 50%;
+  top: 7%;
+  margin-left: -175px;
+  height: 50px;
+  width: 350px;
+  font-size: 36px;
+  color: black;
+  z-index: 2
+
+}
+.fix-box{
+  position: absolute;
+  left: 50%;
+  top: 17%;
+  text-align: center;
+  margin-left: -275px;
+  height: 50px;
+  width: 550px;
+  font-size: 24px;
+  color: black;
+  z-index: 2
+}
+#chat-box{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -200px 0 0 -250px;
+  z-index: 6;
+
+}
+button {
+  position: absolute;
+  z-index: 7;
+  font-size: 30px;
+  background-color: #0071BC;
+  left: 50%;
+  margin-top: 10px;
+  margin-left: -100px;
+  width: 200px;
+  height: 70px;
+  border-radius: 20px;
+  border-color: black;
+  border-width: 1.2px;
 }

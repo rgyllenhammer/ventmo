@@ -7,7 +7,6 @@ import os
 module_dir = os.path.dirname(__file__)
 
 def run():
-    print('i am trying to record my mans here he is so cute')
     test_path = os.path.join(module_dir, 'test.wav')
     file_path = os.path.join(module_dir, 'ventmo-e430325bdb43.json')
     credentials = service_account.Credentials.from_service_account_file(file_path)
@@ -18,5 +17,4 @@ def run():
 
     rec = recordtest.Recorder()
     with rec.open(test_path, 'wb') as recfile:
-        print("recording for 5 seconds")
-        recfile.record(duration=5.0)
+        recfile.record(duration=10.0)

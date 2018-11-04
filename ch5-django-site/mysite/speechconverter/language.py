@@ -2,6 +2,9 @@ from google.cloud import language
 from google.cloud.language import enums
 from google.cloud.language import types
 from google.oauth2 import service_account
+from bs4 import BeautifulSoup
+import urllib.request
+import urllib.parse
 import six
 import os
 
@@ -20,7 +23,7 @@ client = language.LanguageServiceClient(credentials = credentials)
 #}
 #return alist of 3 dictionaries
 def three_Entities(entities):
-	if len(entities) <= 3:
+	if len(entities) <= 10:
 		return entities
 	else:
 		total = 3
@@ -46,7 +49,6 @@ def postive(s):
 def negative(s):
 	if s <= -.4:
 		return True
-
 	return False
 
 def nuetral(s):
@@ -61,8 +63,8 @@ def max_mag(entities):
 			max = entitiy["magnitude"]
 	return max
 
+final_sent = []
 def three_sentences(entities):
-	final_sent = []
 	for entitiy in entities:
 		if postive(entitiy["sentiment"]):
 			if entitiy["magnitude"] > max_mag(entities)/1.5:
@@ -82,6 +84,7 @@ def three_sentences(entities):
 
 	return final_sent
 
+
 def return_sentiment(text):
 
     if isinstance(text, six.binary_type):
@@ -91,6 +94,7 @@ def return_sentiment(text):
         content=text,
         type = enums.Document.Type.PLAIN_TEXT
     )
+
     encoding = enums.EncodingType.UTF32
 
     result = client.analyze_entity_sentiment(document, encoding)
@@ -114,4 +118,13 @@ def return_sentiment(text):
         return_arr.append(entity_obj)
 
     entity_list = three_Entities(return_arr)
-    return three_sentences(entity_list)
+    list_of_strings = three_sentences(entity_list)
+
+
+    textToSearch = " ".join(list_of_strings)
+    query_string = urllib.parse.urlencode({"search_query" : textToSearch})
+    html = urllib.request.urlopen("http://www.youtube.com/results?" + query_string)
+    soup = BeautifulSoup(html, features="html.parser")
+    vid = soup.find(attrs={'class':'yt-uix-tile-link'})
+    print('https://www.youtube.com' + vid['href'])
+    return list_of_strings

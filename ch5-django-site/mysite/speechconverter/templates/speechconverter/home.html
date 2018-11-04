@@ -1,8 +1,20 @@
 {% extends "speechconverter/head.html" %}
 
 {% block content %}
-  <h2>
-    Correct your feelings if we heard wrong
-  </h2>
-{% include "speechconverter/feeling_form.html"%}
+{% load staticfiles %}
+  <div class = "background">
+    <div class = "back-img">
+      <img src = "{% static 'ventmo-background.png' %}">
+    </div>
+    <div class = "missing-box">
+      <a> Did we miss anything? </a>
+    </div>
+    <div class = "fix-box">
+      <a> Fix anything we missed or got wrong in the text below!</a>
+    </div>
+    {% include "speechconverter/feeling_form.html" %}
+  </div>
+
+
+
 {% endblock %}
