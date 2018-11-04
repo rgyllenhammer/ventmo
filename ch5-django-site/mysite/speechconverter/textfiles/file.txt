@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 I love hot dogs
+=======
+if she takes one of the areas at least hopefully
+>>>>>>> 4f41a88c03a11bc2ec8a6c7fe914f04a03511e3e

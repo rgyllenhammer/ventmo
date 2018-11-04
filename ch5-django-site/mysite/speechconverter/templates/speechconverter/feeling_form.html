@@ -1,12 +1,11 @@
 
-
 {% block content %}
-<div id='chat-box'>
-  <form action='analyze_text/' method='post'>
-    {% csrf_token %}
-    <textarea name="comment">{{ default }}</textarea>
-    <button type='submit'> submit </button>
-  </form>
-</div>
+  <div id='chat-box'>
+    <form action='analyze_text/' method='post'>
+      {% csrf_token %}
+      <textarea style="width: 500px; height: 400px" name="comment">{{ default }}</textarea>
+      <button type='submit'> Advice Time! </button>
+    </form>
+  </div>
 
 {% endblock %}

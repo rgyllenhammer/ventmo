@@ -4,6 +4,8 @@ from django.http import HttpResponseRedirect
 from django.templatetags.static import static
 import os
 from . import language
+from . import recorder
+from . import speech
 
 module_dir = os.path.dirname(__file__)
 def index(request):
@@ -13,6 +15,14 @@ def index(request):
     full_text = "".join(lines)
     f.close()
     return render(request, 'speechconverter/home.html', {'default':full_text})
+
+def record(request):
+    return render(request, 'speechconverter/record.html')
+
+def currently_recording(request):
+    recorder.run()
+    speech.run()
+    return index(request)
 
 def analyze(request):
 
