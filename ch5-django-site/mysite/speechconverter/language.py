@@ -10,6 +10,78 @@ file_path = os.path.join(module_dir, 'ventmo-e430325bdb43.json')
 credentials = service_account.Credentials.from_service_account_file(file_path)
 client = language.LanguageServiceClient(credentials = credentials)
 
+#takes in a list of dictionaries
+#Example Doictionary:
+#Entity{
+# "Type" : String
+#"Salience" : double
+# "Sentiment": double
+# "Magnitiude: double
+#}
+#return alist of 3 dictionaries
+def three_Entities(entities):
+	if len(entities) <= 3:
+		return entities
+	else:
+		total = 3
+		final_ents = []
+
+		while total > 0:
+			max_e = 0.0
+			for entity in entities:
+				if entity["salience"] > max_e:
+					max_ent = entity
+					max_e = entity["salience"]
+			final_ents.append(max_ent)
+			entities.remove(max_ent)
+			total -= 1
+	return final_ents
+
+#takes in a sentiment value
+def postive(s):
+	if s >= .6:
+		return True
+	return False
+
+def negative(s):
+	if s <= -.6:
+		return True
+
+	return False
+
+def nuetral(s):
+	if s < .6 and s > -.6:
+		return True
+	return False
+
+def max_mag(entities):
+	max = 0
+	for entitiy in entities:
+		if entitiy["magnitude"] > max:
+			max = entitiy["magnitude"]
+	return max
+
+def three_sentences(entities):
+	final_sent = []
+	for entitiy in entities:
+		if postive(entitiy["sentiment"]):
+			if entitiy["magnitude"] > max_mag(entities)//1.5:
+				final_sent.append("love " + entitiy["name"])
+			else:
+				final_sent.append("like " + entitiy["name"])
+		elif negative(entitiy["sentiment"]):
+			if entitiy["magnitude"] > max_mag(entities)//1.5:
+				final_sent.append("hate " + entitiy["name"])
+			else:
+				final_sent.append("dislike " + entitiy["name"])
+		else:
+			if entitiy["magnitude"] > max_mag(entities)//1.5:
+				final_sent.append("confused " + entitiy["name"])
+			else:
+				final_sent.append("neutral " + entitiy["name"])
+
+	return final_sent
+
 def return_sentiment(text):
 
     if isinstance(text, six.binary_type):
@@ -33,18 +105,19 @@ def return_sentiment(text):
 
     return_arr = []
     for entity in result.entities:
-        ret_string = "\n\n\n==================\n"
-        ret_string += 'Mentions: ' + u'Name: "{}"'.format(entity.name) + '\n\n'
-        for mention in entity.mentions:
-            ret_string += '  Begin Offset : {}'.format(mention.text.begin_offset) + '\n\n'
-            ret_string += '  Content : {}'.format(mention.text.content) + '\n\n'
-            ret_string += '  Magnitude : {}'.format(mention.sentiment.magnitude) + '\n\n'
-            ret_string += '  Sentiment : {}'.format(mention.sentiment.score) + '\n\n'
-            ret_string += '  Type : {}'.format(entity_type[mention.type]) + '\n\n'
-        ret_string += 'Salience: {}'.format(entity.salience) + '\n\n'
-        ret_string += 'Sentiment: {}\n'.format(entity.sentiment) + '\n\n'
-        return_arr.append('SENTIMENT SCORE: {}'.format(sentiment.score) + '\n\n' + 'SENTIMENT MAGNITUDE: {}'.format(sentiment.magnitude) + '\n')
 
-        return_arr.append(ret_string)
+        # for mention in entity.mentions:
+        #     mag += mention.sentiment.magnitude
 
-    return return_arr
+        # print(entity.sentiment)
+
+        entity_obj = {
+            'name':entity.name,
+            'sentiment':entity.sentiment.score,
+            'salience':entity.salience,
+            'magnitude':entity.sentiment.magnitude
+        }
+        return_arr.append(entity_obj)
+
+    entity_list = three_Entities(return_arr)
+    return three_sentences(entity_list)
