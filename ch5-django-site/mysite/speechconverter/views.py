@@ -37,7 +37,6 @@ def analyze(request):
         full_text = "".join(lines)
         f.close()
 
-
         analyzed_lines = language.return_sentiment(full_text)
         return render(request, 'speechconverter/text_analysis.html', {'original_text':full_text, 'content':analyzed_lines})
 

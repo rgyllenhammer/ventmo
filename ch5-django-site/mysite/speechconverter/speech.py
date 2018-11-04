@@ -22,15 +22,13 @@ langclient = language.LanguageServiceClient(credentials = credentials)
 #sample_rate_hertz = 16600
 language_code = 'en-US'
 config = {'language_code': language_code}
-#uri = '../Documents/Sound recordings/test-voice.m4a'
-#audio = {'uri': uri}
-# The name of the audio file to transcribe
-# rec = Recorder()
-# text = input("enter s to start >> ")  # Python 3
-# if text == 's':
-#     with rec.open('test.wav', 'wb') as recfile:
-#         print("recording for 5 seconds")
-#         recfile.record(duration=5.0)
+
+ #rec = Recorder()
+ #text = input("enter s to start >> ")  # Python 3
+ #if text == 's':
+    #  with rec.open('test.wav', 'wb') as recfile:
+    #      print("recording for 5 seconds")
+    #      recfile.record(duration=5.0)
 
 file_name = "test.wav"
 
