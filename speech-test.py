@@ -9,7 +9,7 @@ from recordtest import Recorder
 from recordtest import RecordingFile
 import six
 
-credentials = service_account.Credentials.from_service_account_file("voice-test-afb02ccbc45b.json")
+credentials = service_account.Credentials.from_service_account_file("ventmo-e430325bdb43.json")
 client = speech_v1.SpeechClient(credentials = credentials)
 langclient = language.LanguageServiceClient(credentials = credentials)
 
